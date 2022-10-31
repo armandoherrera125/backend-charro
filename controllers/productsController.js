@@ -1,16 +1,22 @@
-const { request, response } = require("express")
+const { request, response } = require("express");
+const { getAmountOfProducts } = require("../helpers/CountProducts");
 const {Product} = require('../models/product');
 const productsGet = async( req = request, res = response ) => {
     const products = await Product.findAll();
-    console.log(products);
+    const algo = await getAmountOfProducts();
+    console.log(typeof algo);
+    //console.log(products);
     res.status(200).json(
         products
     );
 }
 const productCreate = async( req = request, res = response ) => {
     const { name, price } = req.body;
+    const amountOfProducts = await getAmountOfProducts();
+    const id = amountOfProducts + 1;
     try {
         const creatingProduct = await Product.create({
+            id,
             name,
             price
         });
