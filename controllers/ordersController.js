@@ -43,10 +43,16 @@ const orderCreate = async( req = request, res = response ) => {
     const {description} = req.body;
     const amountOfOrders = await getAmountOfOrders();
     const id = amountOfOrders + 1;
+    const createdAt = new Date();
+    const updatedAt = new Date();
+    console.log(createdAt);
+
     try {
         const creatingOrders = await Order.create({
             id,
-            description
+            description,
+            createdAt,
+            updatedAt
         });
         console.log(creatingOrders);
         res.status(201).json({
