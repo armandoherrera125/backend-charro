@@ -50,13 +50,17 @@ const ordersGet = async (req = request, res = response) => {
          );
         
      }
-     const {caja} = arraydecajas;
-    res.status(200).json(
-        {
-            onlyDescription,
-            caja
-        }
-    );
+     if (arraydecajas.length==1) {
+        const {caja} = arraydecajas;
+       return res.status(200).json(
+            {
+                onlyDescription,
+                caja
+            }
+        );
+
+     }
+
 }
 // const ordersGet = async( req = request, res = response ) => {
 //     const orders = await Order.findAll({
