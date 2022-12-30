@@ -37,6 +37,7 @@ const ordersGet = async (req = request, res = response) => {
     let arraydecajas = await sequelize.query(`SELECT * FROM Boxes WHERE createdAt BETWEEN '${startDate} 00:00:00' AND '${endDate} 23:59:59'`,{
         model: Box
     });
+    console.log(arraydecajas);
     console.log(arraydecajas.length);
      if (arraydecajas.length > 1) {
         arraydecajas = arraydecajas[arraydecajas.length-1];
