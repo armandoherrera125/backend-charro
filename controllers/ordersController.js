@@ -52,6 +52,7 @@ const ordersGet = async (req = request, res = response) => {
      }
      if (arraydecajas.length==1) {
         const {caja} = arraydecajas;
+        console.log(caja);
        return res.status(200).json(
             {
                 onlyDescription,
