@@ -14,7 +14,7 @@ class Server{
         // this.loginPath = '/auth';
          this.productsPath = '/api/products';
          this.ordersPath = '/api/orders';
-
+         this.boxPath = '/api/box';
         this.db();
         this.middlewares();
          this.routes();
@@ -38,6 +38,8 @@ class Server{
     routes(){
         this.app.use(this.productsPath, require('../routes/productsRoute'));
         this.app.use(this.ordersPath,require('../routes/ordersRoute'));
+        this.app.use(this.boxPath,require('../routes/cajaRoute'));
+
     }
     listen(){
         this.app.listen(this.port, () => {

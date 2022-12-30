@@ -1,23 +1,23 @@
 const { request, response } = require("express");
 const { sequelize } = require("../db/connection");
 const { getAmountOfOrders } = require("../helpers/CountProducts");
-const {Order} = require('../models/order');
+const { Box } = require("../models/box");
+const { Order } = require('../models/order');
 
-
-const ordersGet = async( req = request, res = response ) => {
-    const {startDate,endDate} = req.query;
-    console.log(startDate,endDate);
-    let orders = await sequelize.query(`SELECT * FROM Orders WHERE createdAt BETWEEN '${startDate} 00:00:00' AND '${endDate} 23:59:59'`,{
+const ordersGet = async (req = request, res = response) => {
+    const { startDate, endDate } = req.query;
+    console.log(startDate, endDate);
+    let orders = await sequelize.query(`SELECT * FROM Orders WHERE createdAt BETWEEN '${startDate} 00:00:00' AND '${endDate} 23:59:59'`, {
         model: Order,
         //attributes: {exclude: ['password']},
 
     });
     console.log(orders);
-    orders.forEach( (order) => {
+    orders.forEach((order) => {
         order.dataValues.description = JSON.parse(order.dataValues.description);
     });
     let onlyDescription = [];
-    orders.map( (order) => {
+    orders.map((order) => {
         onlyDescription.push(order.dataValues.description);
     });
     let newArray = [];
@@ -25,22 +25,51 @@ const ordersGet = async( req = request, res = response ) => {
     //     console.log(algo[idx].length);
     // });
 
+    if (startDate !== endDate) {
+        return res.status(200).json(
+            {
+                onlyDescription,
+                caja: '0'
+            }
+        );
+    }
+    //TODO: Logic for the caja
+    let arraydecajas = await sequelize.query(`SELECT * FROM Boxes WHERE createdAt BETWEEN '${startDate} 00:00:00' AND '${endDate} 23:59:59'`,{
+        model: Box
+    });
+    console.log(arraydecajas.length);
+     if (arraydecajas.length > 1) {
+        arraydecajas = arraydecajas[arraydecajas.length-1];
+          const {caja} = arraydecajas;
+         return res.status(200).json(
+             {
+                 onlyDescription,
+                 caja
+             }
+         );
+        
+     }
+     const {caja} = arraydecajas;
     res.status(200).json(
-        onlyDescription
+        {
+            onlyDescription,
+            caja
+        }
     );
 }
 // const ordersGet = async( req = request, res = response ) => {
 //     const orders = await Order.findAll({
 //         where:{
-            
+
 //         }
 //     });
 //     res.status(200).json(
 //         orders
 //     );
 // }
-const orderCreate = async( req = request, res = response ) => {
-    const {description} = req.body;
+
+const orderCreate = async (req = request, res = response) => {
+    const { description } = req.body;
     const amountOfOrders = await getAmountOfOrders();
     const id = amountOfOrders + 1;
     const createdAt = new Date();
