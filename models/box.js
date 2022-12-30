@@ -8,7 +8,7 @@ const Box = sequelize.define( 'Box', {
         primaryKey: true,
     },
     caja:{
-        type: DataTypes.DECIMAL,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     createdAt: {
