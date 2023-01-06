@@ -39,6 +39,16 @@ const ordersGet = async (req = request, res = response) => {
     });
     //console.log(arraydecajas);
     //console.log(arraydecajas.length);
+    if (arraydecajas.length == 0) {
+        return res.status(200).json(
+            {
+                onlyDescription,
+                caja: '0'
+            }
+        );
+    }
+
+
      if (arraydecajas.length > 1) {
         arraydecajas = arraydecajas[arraydecajas.length-1];
           const {caja} = arraydecajas;
