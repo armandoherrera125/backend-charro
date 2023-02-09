@@ -12,7 +12,8 @@ const ordersGet = async (req = request, res = response) => {
         //attributes: {exclude: ['password']},
 
     });
-    console.log(orders);
+    const amountOfOrders = orders.length;
+
     orders.forEach((order) => {
         order.dataValues.description = JSON.parse(order.dataValues.description);
     });
@@ -29,7 +30,8 @@ const ordersGet = async (req = request, res = response) => {
         return res.status(200).json(
             {
                 onlyDescription,
-                caja: '0'
+                caja: '0',
+                amountOfOrders
             }
         );
     }
@@ -43,7 +45,8 @@ const ordersGet = async (req = request, res = response) => {
         return res.status(200).json(
             {
                 onlyDescription,
-                caja: '0'
+                caja: '0',
+                amountOfOrders
             }
         );
     }
@@ -55,7 +58,8 @@ const ordersGet = async (req = request, res = response) => {
          return res.status(200).json(
              {
                  onlyDescription,
-                 caja
+                 caja,
+                 amountOfOrders
              }
          );
         
@@ -67,7 +71,8 @@ const ordersGet = async (req = request, res = response) => {
        return res.status(200).json(
             {
                 onlyDescription,
-                caja
+                caja,
+                amountOfOrders
             }
         );
 
