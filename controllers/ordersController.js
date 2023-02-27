@@ -95,13 +95,20 @@ const orderCreate = async (req = request, res = response) => {
     const { description } = req.body;
     const amountOfOrders = await getAmountOfOrders();
     const id = amountOfOrders + 1;
+    const time = moment.duration("06:00:00");
+
+
+
     var date = moment();
+    date.subtract(time).format();
+
+    console.log(date.format());
     const actualDate = moment().format();
-    console.log(actualDate);
+    //console.log(actualDate);
     const today = new Date();
     //console.log(today);
-    const createdAt = actualDate;
-    const updatedAt = actualDate;
+    const createdAt = date.format();
+    const updatedAt = date.format();
     //console.log(createdAt);
 
     try {
