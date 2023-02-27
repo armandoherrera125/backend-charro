@@ -1,4 +1,5 @@
 const { request, response } = require("express");
+const moment = require("moment/moment");
 const { sequelize } = require("../db/connection");
 const { getAmountOfOrders } = require("../helpers/CountProducts");
 const { Box } = require("../models/box");
@@ -94,9 +95,14 @@ const orderCreate = async (req = request, res = response) => {
     const { description } = req.body;
     const amountOfOrders = await getAmountOfOrders();
     const id = amountOfOrders + 1;
-    const createdAt = new Date();
-    const updatedAt = new Date();
-    console.log(createdAt);
+    var date = moment();
+    const actualDate = moment().format();
+    console.log(actualDate);
+    const today = new Date();
+    //console.log(today);
+    const createdAt = actualDate;
+    const updatedAt = actualDate;
+    //console.log(createdAt);
 
     try {
         const creatingOrders = await Order.create({

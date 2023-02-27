@@ -7,8 +7,9 @@ const cajaCreate = async (req = request, res = response) => {
     const { caja } = req.body;
     const amountOfBox = await getAmountOfBox();
     const id = amountOfBox + 1;
-    const createdAt = new Date();
-    const updatedAt = new Date();
+    const today = new Date();
+    const createdAt = today.toLocaleString();
+    const updatedAt = today.toLocaleString();
     try {
         const creatingBox = await Box.create({
             id,
