@@ -26,6 +26,12 @@ const Product = sequelize.define( 'Product', {
         allowNull: true,
         defaultValue: 1
     },
+    createdAt: {
+        type: DataTypes.NOW
+    },
+    updatedAt: {
+        type: DataTypes.NOW
+    },
 });
 module.exports = {
     Product
